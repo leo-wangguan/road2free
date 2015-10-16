@@ -1,8 +1,9 @@
-function Flag = detect_swing(Close, Before, i, N)
-    
-    Pct = Close(i-N+1:i) ./ Before(i-N+1:i) - 1;
-    
-    Flag = ifelse(mean(Pct) < 1/100, true, false);
-    
-end
+function Swing = detect_swing(Close, Before, Swing, i)
 
+    Aux = i - 5 + 1;
+    Idx = ifelse(Aux < 0, 1, Aux);
+    Pct = Close(Idx:i) ./ Before(Idx:i) - 1;
+
+    Swing(i) = abs(mean(Pct)) < 0.01;
+
+end

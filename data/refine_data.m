@@ -2,7 +2,7 @@ function Data = refine_data(Data)
 
     % Insert a column represents before close price.
     %
-    % Data = [Date Open High Low Before Vol Amount];
+    % Data = [Date Open High Low Close Vol Amount];
     %
     % Data = [Date Open High Low Close Before Vol Amount];
 
