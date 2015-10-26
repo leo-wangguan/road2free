@@ -1,9 +1,9 @@
-[Name, Data] = load_data(4);
+[Name, Data] = load_data(10);
 
-DatePair = [20140101, 20150831];
+DatePair = [20100101, 20151231];
 
-% Data = downsample_data(Data, 5);
+show_plot(Name, Data, DatePair, @get_ma_solo_signal, {20});
 
-show_plot(Name, Data, DatePair, @get_ma_buy_sell_signal, {20,20});
+show_plot(Name, Data, DatePair, @get_ma_duo_cross_signal, {10,20});
 
-% show_plot(Name, Data, DatePair, @get_extrem_signal, {20,10});
+show_plot(Name, Data, DatePair, @get_extrem_close_signal, {20,10});

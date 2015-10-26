@@ -1,20 +1,14 @@
-function NewData = get_ma_buy_sell_signal(Data, DatePair, Arg)
-
-    % Close price higher/lower than MA, Buy/Sell at the end of the day.
-    %
-    %
-    % Use Before/Close as BuyPrice/SellPrice to calculate the delta.
-    % Update BuyPrice(i)/SellPrice if actions happen.
-    %
-    % Signal change at the same day.
+function NewData = get_extrem_close_signal(Data, DatePair, Arg)
 
     % Parse arguments
-    AvgBuy  = Arg{1};
-    AvgSell = Arg{2};
+    IntvBuy  = Arg{1};
+    IntvSell = Arg{2};
 
     % Pre-processing
-    Offset    = max([AvgBuy AvgSell]) - 1;
+    Offset    = max([IntvBuy IntvSell]);
     TrunData  = truncate_data(Data, DatePair, Offset);
+    High      = TrunData(:,3);
+    Low       = TrunData(:,4);
     Close     = TrunData(:,5);
     BuyPrice  = TrunData(:,6);
     SellPrice = TrunData(:,5);
@@ -26,14 +20,14 @@ function NewData = get_ma_buy_sell_signal(Data, DatePair, Arg)
     HoldSignal = zeros(Len, 1);
 
     % Reference
-    [~, MaBuy]  = movavg(Close, 1, AvgBuy);
-    [~, MaSell] = movavg(Close, 1, AvgSell);
+    Max = extremum(@max, High, IntvBuy);
+    Min = extremum(@min, Low,  IntvSell);
 
     for i = Offset+1:Len
 
         % Criteria
-        Buy  = Close(i) >= MaBuy(i);
-        Sell = Close(i) <  MaSell(i);
+        Buy  = Close(i) >= Max(i-1);
+        Sell = Close(i) <  Min(i-1);
 
         [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice] = ...
             do_trade(Buy, Sell, Close(i), BuyPrice, SellPrice, ...
