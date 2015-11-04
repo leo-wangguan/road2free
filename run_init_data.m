@@ -1,6 +1,6 @@
 clear
 
-cd('.\mat')
+cd('C:\program\github\road2free\mat')
 
 Type = 'STOCK';
 Code = '600595';
