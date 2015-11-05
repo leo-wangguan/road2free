@@ -1,10 +1,16 @@
 clear
 
-cd('C:\program\github\road2free\mat')
+cd('.\mat')
+
+load('StockList.mat')
 
 Type = 'STOCK';
-Code = '600595';
 
-init_data(Type, Code, 20001010)
+parfor i = 2410:length(StockList)
+
+    Code = num2str(cell2mat(StockList(i,3)));
+    init_data(Type, Code, 20090101)
+
+end
 
 cd('..\')
