@@ -5,7 +5,12 @@ function StockData = f_get_hist_stock_data(Code, Start, End)
     % StockData = [Date Open High Low Close Before Vol Amount Factor];
 
     StockData = GetStockTSDay_Web(Code, Start, End);
-    StockData = CalculateStockXRD(StockData, [], 1);
-    StockData = refine_data(StockData);
+
+%     if size(StockData, 1) > 0
+% 
+%         StockData = CalculateStockXRD(StockData, [], 1);
+%         StockData = refine_data(StockData);
+% 
+%     end
 
 end

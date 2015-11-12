@@ -1,5 +1,6 @@
-[Name, Data] = load_data(10);
+% [Name, Data] = load_data(10);
 
+Name = '399006';
 DatePair = [20100101, 20151231];
 
 % show_plot(Name, Data, DatePair, @get_ma_solo_signal, {20});

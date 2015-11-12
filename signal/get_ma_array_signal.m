@@ -26,7 +26,8 @@ function NewData = get_ma_array_signal(Data, DatePair, Arg)
     for i = Offset+1:Len
 
         % Criteria
-        Buy  = Ma1(i) > Ma2(i) && Ma2(i) > Ma3(i) && Ma3(i) > Ma3(i-1);
+        Buy  = Ma1(i) > Ma2(i) && Ma2(i) > Ma3(i) && ...
+               Ma3(i) > Ma3(i-1);
         Sell = ~Buy;
 
         [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice] = ...

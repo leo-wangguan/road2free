@@ -8,9 +8,8 @@ function update_data(Type, Code)
 
     NewData = get_data(Type, Code, Data(end,1), yyyymmdd(datetime('today')));
     Data    = append_data(Data, NewData);
- 
-    validate_data(Data);
 
+    validate_data(Data);
     save(Name, 'Data');
 
 end

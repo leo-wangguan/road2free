@@ -1,5 +1,6 @@
-[Name, Data] = load_data(8);
+% [Name, Data] = load_data(8);
 
+Name = '399006';
 DatePair = [[20040101, 20041231];
             [20050101, 20051231];
             [20060101, 20061231];
@@ -14,6 +15,8 @@ DatePair = [[20040101, 20041231];
             [20150101, 20151231];
             [20000101, 20151231]];
 
-show_table(Name, Data, DatePair, @get_ma_buy_sell_signal, {20,10});
+% show_table(Name, Data, DatePair, @get_ma_buy_sell_signal, {20,10});
 
-show_table(Name, Data, DatePair, @get_extrem_signal, {20,10});
+% show_table(Name, Data, DatePair, @get_extrem_signal, {20,10});
+
+show_table(Name, Data, DatePair, @get_ma_array_signal, {5,10,20});
