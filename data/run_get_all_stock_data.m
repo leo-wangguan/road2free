@@ -1,33 +1,68 @@
-% Note:
-% Use this script to initialize all data of stocks from StockInfo.
-% Otherwise, it will be overwriiten.
+% run it as a script.
 
-clear
+function run_get_all_stock_data()
 
-cd_to_top_level()
+    tic
 
-load('./mat/StockInfo.mat')
+    clear
 
-parfor i = 1:size(StockInfo, 1)
+    cd_to_top_level()
 
-    Code = num2str(cell2mat(StockInfo(i,3)), '%06d');
-    Date = StockInfo{i,4}.IPOdate;
+    run_get_all_stock_info()
 
-    % File exists, do not overwrite it.
-    if exist(['./mat/' 'STOCK_', Code, '_ExDiv.mat'], 'file') ~= 2
+    S1 = load('./mat/StockInfo.mat');
+    S2 = load('./mat/StockInfoPatch.mat');
+    StockInfo = S1.StockInfo;
+    StockInfoPatch = S2.StockInfoPatch;
+    
+    parfor i = 1:size(StockInfo, 1)
 
-        % IPO date not valid, start from the very beginning.
-        if length(num2str(Date)) ~= 8
+        Code = num2str(cell2mat(StockInfo(i,3)), '%06d');
+        Date = patch_date(Code, StockInfo{i,4}.IPOdate, StockInfoPatch);
 
-            Date = 19910101;
+        % File does not exist, initialize it.
+        if exist(['./mat/' 'STOCK_', Code, '_ExDiv.mat'], 'file') ~= 2
+
+            if ~isempty(Date)
+
+                disp_msg('IN', 'Initiating data ...')
+
+                init_data('STOCK', Code, Date)
+
+            else
+
+                disp_msg('IN', 'No IPO date:')
+                disp_msg('IN', Code)
+
+            end
+
+        % File exist, update it.
+        else
+
+            disp_msg('IN', 'Updating data ...')
+
+            update_data('STOCK', Code)
 
         end
 
-        disp([Code ' ' num2str(Date)])
-        init_data('STOCK', Code, Date)
+    end
+
+    toc
+
+end
+
+function Date = patch_date(Code, DateTmp, StockInfoPatch)
+
+    [Is, Idx] = ismember(str2double(Code), cell2mat(StockInfoPatch(:,1)));
+
+    if Is
+
+        Date = StockInfoPatch{Idx, 2};
+
+    else
+
+        Date = DateTmp;
 
     end
 
 end
-
-cd_to_top_level()

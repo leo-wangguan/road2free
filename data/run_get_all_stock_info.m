@@ -9,7 +9,7 @@ function run_get_all_stock_info()
     % File exists.
     if exist('./mat/StockInfo.mat', 'file') == 2
 
-        load('./mat/StockInfo.mat');
+        load('./mat/StockInfo.mat')
 
         ListOld = StockInfo(:,1:3);
         ListNew = GetStockList_Web;
@@ -17,13 +17,13 @@ function run_get_all_stock_info()
         % List unchanged, do a get loop just in case.
         if isequaln(ListOld, ListNew)
 
-            get_stock_info(StockInfo);
+            get_stock_info(StockInfo)
 
         % List changed, update then get info.
         else
 
             StockInfo = prep_on_changes(StockInfo, ListOld, ListNew);
-            get_stock_info(StockInfo);
+            get_stock_info(StockInfo)
 
         end
 
@@ -32,7 +32,7 @@ function run_get_all_stock_info()
 
         List = GetStockList_Web;
         StockInfo = [List cell(size(List, 1), 1)];
-        get_stock_info(StockInfo);
+        get_stock_info(StockInfo)
 
     end
 
@@ -40,18 +40,19 @@ end
 
 function get_stock_info(StockInfo)
 
+    disp_msg('IN', 'Updating stock info ...')
+
     for i = 1:size(StockInfo, 1);
 
         % Get info only when no existing info.
         if isempty(StockInfo{i,4})
 
             Code = num2str(cell2mat(StockInfo(i,3)), '%06d');
-            disp('Updating:')
-            disp(Code)
+            disp_msg('IN', num2str(Code))
             StockInfo{i,4} = GetStockInfo_Web(Code);
 
             % URL read may get error, save data right away.
-            save('./mat/StockInfo.mat', 'StockInfo');
+            save('./mat/StockInfo.mat', 'StockInfo')
 
         end
 
@@ -69,8 +70,8 @@ function StockInfo = prep_on_changes(StockInfoOld, ListOld, ListNew)
 
     % Find indices of new codes w.r.t new list.
     Idx1 = find(~ismember(CodesNew, CodesOld));
-    disp('New added stocks:')
-    disp(num2str(CodesNew(Idx1)))
+
+    disp_msg('IN', 'New added stocks:')
 
     % If codes added.
     if ~isempty(Idx1)
@@ -85,6 +86,10 @@ function StockInfo = prep_on_changes(StockInfoOld, ListOld, ListNew)
 
                 StockInfo{j,4} = StockInfoOld{i,4};
                 i = i + 1;
+
+            else
+
+                disp_msg('IN', num2str(CodesNew(j)))
 
             end
 
@@ -103,8 +108,8 @@ function StockInfo = prep_on_changes(StockInfoOld, ListOld, ListNew)
     % Find indices of changed names w.r.t new list.
     Idx2 = find(~ismember(NamesNew, NamesOld));
     Idx2(ismember(Idx2, Idx1)) = [];
-    disp('Name changed stocks:')
-    disp(num2str(CodesNew(Idx2)))
+
+    disp_msg('IN', 'Name changed stocks:')
 
     % If names changed.
     if ~isempty(Idx2)
@@ -114,6 +119,7 @@ function StockInfo = prep_on_changes(StockInfoOld, ListOld, ListNew)
         for k = Idx2'
 
             % Clear info.
+            disp_msg('IN', num2str(CodesNew(k)))
             StockInfo{k,4} = [];
 
         end
