@@ -2,13 +2,9 @@
 
 function run_get_all_stock_data()
 
-    tic
-
     clear
 
     cd_to_top_level()
-
-    run_get_all_stock_info()
 
     S1 = load('./mat/StockInfo.mat');
     S2 = load('./mat/StockInfoPatch.mat');
@@ -46,8 +42,6 @@ function run_get_all_stock_data()
         end
 
     end
-
-    toc
 
 end
 
