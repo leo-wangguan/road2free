@@ -48,7 +48,9 @@ function get_stock_info(StockInfo)
         if isempty(StockInfo{i,4})
 
             Code = num2str(cell2mat(StockInfo(i,3)), '%06d');
+
             disp_msg('IN', num2str(Code))
+
             StockInfo{i,4} = GetStockInfo_Web(Code);
 
             % URL read may get error, save data right away.
@@ -60,73 +62,42 @@ function get_stock_info(StockInfo)
 
 end
 
-function StockInfo = prep_on_changes(StockInfoOld, ListOld, ListNew)
+function StockInfo = prep_on_changes(StockInfo, ListOld, ListNew)
 
     Len = size(ListNew, 1);
- 
-    % Codes added.
+
+    % Find indices of old codes w.r.t new list.
     CodesOld = cell2mat(ListOld(:,3));
     CodesNew = cell2mat(ListNew(:,3));
-
-    % Find indices of new codes w.r.t new list.
-    Idx1 = find(~ismember(CodesNew, CodesOld));
+    Idx1 = ismember(CodesNew, CodesOld);
 
     disp_msg('IN', 'New added stocks:')
 
     % If codes added.
-    if ~isempty(Idx1)
+    if sum(Idx1) < Len
 
-        StockInfo = [ListNew cell(Len, 1)];
-        i = 1;
+        disp_msg('IN', num2str(CodesNew(~Idx1), '%06d'))
 
-        for j = 1:Len
-
-            % Copy existing info.
-            if ~ismember(j, Idx1)
-
-                StockInfo{j,4} = StockInfoOld{i,4};
-                i = i + 1;
-
-            else
-
-                disp_msg('IN', num2str(CodesNew(j)))
-
-            end
-
-        end
-
-    else
-
-        StockInfo = StockInfoOld;
+        InfoNew = cell(Len,1);
+        InfoNew(Idx1) = StockInfo(:,4);
+        StockInfo = [ListNew InfoNew];
 
     end
 
-    % Names changed.
+    % Find indices of changed names w.r.t new list.
     NamesOld = ListOld(:,1);
     NamesNew = ListNew(:,1);
-
-    % Find indices of changed names w.r.t new list.
-    Idx2 = find(~ismember(NamesNew, NamesOld));
-    Idx2(ismember(Idx2, Idx1)) = [];
+    Idx2 = xor(Idx1, ismember(NamesNew, NamesOld));
 
     disp_msg('IN', 'Name changed stocks:')
 
     % If names changed.
-    if ~isempty(Idx2)
+    if sum(Idx2) > 0
 
-        StockInfo(Idx2,1) = NamesNew(Idx2);
+        disp_msg('IN', num2str(CodesNew(Idx2), '%06d'))
 
-        for k = Idx2'
-
-            % Clear info.
-            disp_msg('IN', num2str(CodesNew(k)))
-            StockInfo{k,4} = [];
-
-        end
-
-    else
-
-        StockInfo = StockInfoOld;
+        StockInfo(:,1:3) = ListNew;
+        StockInfo(Idx2,4) = cell(sum(Idx2),1);
 
     end
 

@@ -7,6 +7,8 @@ function run_conv_all_stock_data()
     cd_to_top_level()
 
     FileList = ls('./mat/STOCK_*');
+    
+    disp_msg('IN', 'Converting data ...')
 
     for i = 1:size(FileList, 1)
 
