@@ -6,19 +6,20 @@ function run_get_all_stock_data()
 
     cd_to_top_level()
 
-    S1 = load('./mat/StockInfo.mat');
-    S2 = load('./mat/StockInfoPatch.mat');
-    StockInfo = S1.StockInfo;
-    StockInfoPatch = S2.StockInfoPatch;
-    
+    [StockInfo, StockInfoPatch] = load_stock_info();
+
+    tic
+
     parfor i = 1:size(StockInfo, 1)
 
-        Code = num2str(cell2mat(StockInfo(i,3)), '%06d');
-        Date = patch_date(Code, StockInfo{i,4}.IPOdate, StockInfoPatch);
+        Code = num2str06d(cell2mat(StockInfo(i,3)));
 
-        % File does not exist, initialize it.
-        if exist(['./mat/' 'STOCK_', Code, '_ExDiv.mat'], 'file') ~= 2
+        % File does not exist, initiate it.
+        if exist(['./mat/ExDiv/' 'STOCK_', Code, '_ExDiv.mat'], 'file') ~= 2
 
+            Date = correct_date(StockInfo, StockInfoPatch, i);
+
+            % Publicly offered, initiate it.
             if ~isempty(Date)
 
                 disp_msg('IN', 'Initiating data ...')
@@ -43,19 +44,28 @@ function run_get_all_stock_data()
 
     end
 
+    toc
+
 end
 
-function Date = patch_date(Code, DateTmp, StockInfoPatch)
+function [StockInfo, StockInfoPatch] = load_stock_info()
 
-    [Is, Idx] = ismember(str2double(Code), cell2mat(StockInfoPatch(:,1)));
+    load('./mat/StockInfo.mat')
+    load('./mat/StockInfoPatch.mat')
+
+end
+
+function Date = correct_date(StockInfo, StockInfoPatch, i)
+
+    [Is, Idx] = ismember(StockInfo{i,3}, cell2mat(StockInfoPatch(:,1)));
 
     if Is
 
-        Date = StockInfoPatch{Idx, 2};
+        Date = StockInfoPatch{Idx,2};
 
     else
 
-        Date = DateTmp;
+        Date = StockInfo{i,4}.IPOdate;
 
     end
 

@@ -6,13 +6,14 @@ function run_get_all_stock_info()
 
     cd_to_top_level()
 
+    ListNew = GetStockList_Web;
+
     % File exists.
     if exist('./mat/StockInfo.mat', 'file') == 2
 
         load('./mat/StockInfo.mat')
 
         ListOld = StockInfo(:,1:3);
-        ListNew = GetStockList_Web;
 
         % List unchanged, do a get loop just in case.
         if isequaln(ListOld, ListNew)
@@ -23,6 +24,7 @@ function run_get_all_stock_info()
         else
 
             StockInfo = prep_on_changes(StockInfo, ListOld, ListNew);
+
             get_stock_info(StockInfo)
 
         end
@@ -30,8 +32,8 @@ function run_get_all_stock_info()
     % File does not exist, get list then get info.
     else
 
-        List = GetStockList_Web;
-        StockInfo = [List cell(size(List, 1), 1)];
+        StockInfo = [ListNew cell(size(ListNew, 1), 1)];
+
         get_stock_info(StockInfo)
 
     end
@@ -47,7 +49,7 @@ function get_stock_info(StockInfo)
         % Get info only when no existing info.
         if isempty(StockInfo{i,4})
 
-            Code = num2str(cell2mat(StockInfo(i,3)), '%06d');
+            Code = num2str06d(cell2mat(StockInfo(i,3)));
 
             disp_msg('IN', num2str(Code))
 
@@ -64,39 +66,32 @@ end
 
 function StockInfo = prep_on_changes(StockInfo, ListOld, ListNew)
 
-    Len = size(ListNew, 1);
-
     % Find indices of old codes w.r.t new list.
-    CodesOld = cell2mat(ListOld(:,3));
-    CodesNew = cell2mat(ListNew(:,3));
-    Idx1 = ismember(CodesNew, CodesOld);
+    Idx1 = ismember(cell2mat(ListNew(:,3)), cell2mat(ListOld(:,3)));
 
     disp_msg('IN', 'New added stocks:')
 
     % If codes added.
-    if sum(Idx1) < Len
+    if sum(Idx1) < size(ListNew, 1)
 
-        disp_msg('IN', num2str(CodesNew(~Idx1), '%06d'))
+        disp_msg('IN', num2str06d(cell2mat(ListNew(~Idx1,3))))
 
-        InfoNew = cell(Len,1);
-        InfoNew(Idx1) = StockInfo(:,4);
-        StockInfo = [ListNew InfoNew];
+        ListNew(Idx1,4) = StockInfo(:,4);
+        StockInfo = ListNew;
 
     end
 
     % Find indices of changed names w.r.t new list.
-    NamesOld = ListOld(:,1);
-    NamesNew = ListNew(:,1);
-    Idx2 = xor(Idx1, ismember(NamesNew, NamesOld));
+    Idx2 = xor(Idx1, ismember(ListNew(:,1), ListOld(:,1)));
 
     disp_msg('IN', 'Name changed stocks:')
 
     % If names changed.
     if sum(Idx2) > 0
 
-        disp_msg('IN', num2str(CodesNew(Idx2), '%06d'))
+        disp_msg('IN', num2str06d(cell2mat(ListNew(Idx2,3))))
 
-        StockInfo(:,1:3) = ListNew;
+        StockInfo(Idx2,1) = ListNew(Idx2,1);
         StockInfo(Idx2,4) = cell(sum(Idx2),1);
 
     end

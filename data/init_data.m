@@ -9,6 +9,7 @@ function init_data(Type, Code, Start)
         disp_msg('IN', 'Done initiating')
 
         validate_data(Data)
+
         save(['./mat/', Type, '_', Code, '_ExDiv'], 'Data')
 
     else

@@ -2,7 +2,7 @@ function update_data(Type, Code)
 
     % Load data, get new data, append data, validate data, save data.
 
-    Name = ['./mat/', Type, '_', Code, '_ExDiv'];
+    Name = ['./mat/ExDiv/', Type, '_', Code, '_ExDiv.mat'];
 
     load(Name)
 
@@ -15,6 +15,7 @@ function update_data(Type, Code)
         disp_msg('IN', 'Done updating')
 
         validate_data(Data)
+
         save(Name, 'Data')
 
     else
