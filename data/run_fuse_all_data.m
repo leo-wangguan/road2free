@@ -6,12 +6,12 @@ function run_fuse_all_data()
 
     cd_to_top_level()
 
-    load('./mat/INDEX_000001.mat')
+    load('./mat/Index/INDEX_000001.mat')
 
     Date = Data(:,1);
     Len1 = length(Date);
 
-    Len2 = 9;
+    Len2 = 10;
 
     FileList = ls('./mat/ForAdj/STOCK_*');
     Len3 = size(FileList, 1);
@@ -36,7 +36,7 @@ end
 
 function DataEx = expand_data_size(Date, Data)
 
-    DataEx = zeros(length(Date), 9);
+    DataEx = zeros(length(Date), 10);
     Idx = ismember(Date, Data(:,1));
 
     DataEx(Idx,:) = Data;

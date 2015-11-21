@@ -8,44 +8,35 @@ function run_get_all_stock_data()
 
     [StockInfo, StockInfoPatch] = load_stock_info();
 
-    tic
-
     parfor i = 1:size(StockInfo, 1)
 
         Code = num2str06d(cell2mat(StockInfo(i,3)));
         File = ['./mat/ExDiv/STOCK_', Code, '_ExDiv.mat'];
 
-        % File does not exist, initiate it.
-        if exist(File, 'file') ~= 2
+        % File exist, update it.
+        if exist(File, 'file') == 2
+
+            update_data('STOCK', Code, File)
+
+        % File does not exist.
+        else
 
             Date = correct_date(StockInfo, StockInfoPatch, i);
 
             % Publicly offered, initiate it.
             if ~isempty(Date)
 
-                disp_msg('IN', 'Initiating data ...')
-
                 init_data('STOCK', Code, Date, File)
 
             else
 
-                disp_msg('IN', 'No IPO date:')
-                disp_msg('IN', Code)
+                disp_msg('ER', ['No IPO date: ', Code])
 
             end
-
-        % File exist, update it.
-        else
-
-            disp_msg('IN', 'Updating data ...')
-
-            update_data('STOCK', Code, File)
 
         end
 
     end
-
-    toc
 
 end
 

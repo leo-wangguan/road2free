@@ -12,6 +12,6 @@ end
 
 function disp_single_msg(Type, Str)
 
-    disp(['[' Type '] ---- ' Str ' ' repelem('-', 29 - length(Str))])
+    disp(['[' Type '] ---- ' Str ' ' repelem('-', 34 - length(Str))])
 
 end

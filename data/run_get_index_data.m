@@ -2,22 +2,24 @@
 
 function run_get_index_data()
 
-    CodeList = ['000001'; '399005'; '399006'];
+    clear
+
+    cd_to_top_level()
+
+    CodeList = ['000001'; '399005'; '399006'; '399933'];
 
     for i = 1:size(CodeList, 1)
 
         Code = CodeList(i,:);
-        File = ['./mat/INDEX_', Code, '.mat'];
+        File = ['./mat/Index/INDEX_', Code, '.mat'];
 
+        % File exist, update it.
         if exist(File, 'file') ~= 2
 
-            disp_msg('IN', 'Initiating data ...')
+            init_data('INDEX', Code, 19900101, File)
 
-            init_data('INDEX', Code, '19900101', File)
-
+        % File does not exist, initiate it.
         else
-
-            disp_msg('IN', 'Updating data ...')
 
             update_data('INDEX', Code, File)
 

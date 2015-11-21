@@ -42,16 +42,14 @@ end
 
 function get_stock_info(StockInfo)
 
-    disp_msg('IN', 'Updating stock info ...')
-
-    for i = 1:size(StockInfo, 1);
+    for i = 1:size(StockInfo, 1)
 
         % Get info only when no existing info.
         if isempty(StockInfo{i,4})
 
             Code = num2str06d(cell2mat(StockInfo(i,3)));
 
-            disp_msg('IN', num2str(Code))
+            disp_msg('IN', ['Updating stock info ', Code, ' ...'])
 
             StockInfo{i,4} = GetStockInfo_Web(Code);
 
@@ -69,11 +67,10 @@ function StockInfo = prep_on_changes(StockInfo, ListOld, ListNew)
     % Find indices of old codes w.r.t new list.
     Idx1 = ismember(cell2mat(ListNew(:,3)), cell2mat(ListOld(:,3)));
 
-    disp_msg('IN', 'New added stocks:')
-
     % If codes added.
     if sum(Idx1) < size(ListNew, 1)
 
+        disp_msg('IN', 'New added stocks:')
         disp_msg('IN', num2str06d(cell2mat(ListNew(~Idx1,3))))
 
         ListNew(Idx1,4) = StockInfo(:,4);
@@ -84,11 +81,10 @@ function StockInfo = prep_on_changes(StockInfo, ListOld, ListNew)
     % Find indices of changed names w.r.t new list.
     Idx2 = xor(Idx1, ismember(ListNew(:,1), ListOld(:,1)));
 
-    disp_msg('IN', 'Name changed stocks:')
-
     % If names changed.
     if sum(Idx2) > 0
 
+        disp_msg('IN', 'Name changed stocks:')
         disp_msg('IN', num2str06d(cell2mat(ListNew(Idx2,3))))
 
         StockInfo(Idx2,1) = ListNew(Idx2,1);
