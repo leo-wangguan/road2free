@@ -1,16 +1,16 @@
-function init_data(Type, Code, Start)
+function init_data(Type, Code, Start, File)
 
     % Get data, validate data, save data.
 
     Data = get_data(Type, Code, Start, yyyymmdd(datetime('today')));
-    
+
     if ~isempty(Data)
 
         disp_msg('IN', 'Done initiating')
 
         validate_data(Data)
 
-        save(['./mat/', Type, '_', Code, '_ExDiv'], 'Data')
+        save(File, 'Data')
 
     else
 

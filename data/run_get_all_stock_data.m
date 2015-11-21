@@ -13,9 +13,10 @@ function run_get_all_stock_data()
     parfor i = 1:size(StockInfo, 1)
 
         Code = num2str06d(cell2mat(StockInfo(i,3)));
+        File = ['./mat/ExDiv/STOCK_', Code, '_ExDiv.mat'];
 
         % File does not exist, initiate it.
-        if exist(['./mat/ExDiv/' 'STOCK_', Code, '_ExDiv.mat'], 'file') ~= 2
+        if exist(File, 'file') ~= 2
 
             Date = correct_date(StockInfo, StockInfoPatch, i);
 
@@ -24,7 +25,7 @@ function run_get_all_stock_data()
 
                 disp_msg('IN', 'Initiating data ...')
 
-                init_data('STOCK', Code, Date)
+                init_data('STOCK', Code, Date, File)
 
             else
 
@@ -38,7 +39,7 @@ function run_get_all_stock_data()
 
             disp_msg('IN', 'Updating data ...')
 
-            update_data('STOCK', Code)
+            update_data('STOCK', Code, File)
 
         end
 

@@ -1,10 +1,8 @@
-function update_data(Type, Code)
+function update_data(Type, Code, File)
 
-    % Load data, get new data, append data, validate data, save data.
+    % Load data, get new data, validate data, save data.
 
-    Name = ['./mat/ExDiv/', Type, '_', Code, '_ExDiv.mat'];
-
-    load(Name)
+    load(File)
 
     NewData = get_data(Type, Code, Data(end,1), yyyymmdd(datetime('today')));
 
@@ -16,7 +14,7 @@ function update_data(Type, Code)
 
         validate_data(Data)
 
-        save(Name, 'Data')
+        save(File, 'Data')
 
     else
 

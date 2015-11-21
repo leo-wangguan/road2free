@@ -12,13 +12,13 @@ function run_conv_all_stock_data()
 
     for i = 1:size(FileList, 1)
 
-        Name = FileList(i,:);
+        File = FileList(i,:);
 
-        load(['./mat/ExDiv/', Name])
+        load(['./mat/ExDiv/', File])
 
         Data = refine_data(Data);
 
-        save(['./mat/ForAdj/', strrep(Name, 'ExDiv', 'ForAdj')], 'Data')
+        save(['./mat/ForAdj/', strrep(File, 'ExDiv', 'ForAdj')], 'Data')
  
     end
 
