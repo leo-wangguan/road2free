@@ -1,4 +1,9 @@
-mat*/
-fig/
-tmp/
+mat/ForAdj/
+mat/ExDiv/
+mat/Index/
+mat/StockInfo.mat
+mat/BigData.mat
+mat/BigDataList.mat
+mat3/
+
 *.asv

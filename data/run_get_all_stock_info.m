@@ -29,12 +29,10 @@ function run_get_all_stock_info()
 
         end
 
-    % File does not exist, get list then get info.
+    % File does not exist, do a get loop with empty info column.
     else
 
-        StockInfo = [ListNew cell(size(ListNew, 1), 1)];
-
-        get_stock_info(StockInfo)
+        get_stock_info([ListNew cell(size(ListNew, 1), 1)])
 
     end
 

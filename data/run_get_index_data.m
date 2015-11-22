@@ -14,14 +14,14 @@ function run_get_index_data()
         File = ['./mat/Index/INDEX_', Code, '.mat'];
 
         % File exist, update it.
-        if exist(File, 'file') ~= 2
+        if exist(File, 'file') == 2
 
-            init_data('INDEX', Code, 19900101, File)
+            update_data('INDEX', Code, File)
 
         % File does not exist, initiate it.
         else
 
-            update_data('INDEX', Code, File)
+            init_data('INDEX', Code, 19900101, File)
 
         end
 

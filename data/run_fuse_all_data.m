@@ -6,25 +6,15 @@ function run_fuse_all_data()
 
     cd_to_top_level()
 
-    load('./mat/Index/INDEX_000001.mat')
-
-    Date = Data(:,1);
-    Len1 = length(Date);
-
-    Len2 = 10;
-
-    FileList = ls('./mat/ForAdj/STOCK_*');
-    Len3 = size(FileList, 1);
+    [BigData, Date, FileList] = prep_for_fusing();
 
     disp_msg('IN', 'Fusing data ...')
 
-    BigData = zeros(Len1, Len2, Len3);
+    for i = 1:length(FileList)
 
-    for i = 1:Len3
+        load(FileList{i})
 
-        load(['./mat/ForAdj/', FileList(i,:)])
-
-        BigData(:,:,i) = expand_data_size(Date, Data);
+        BigData(ismember(Date, Data(:,1)),:,i) = Data;
 
     end
 
@@ -32,13 +22,39 @@ function run_fuse_all_data()
 
     save('./mat/BigData', 'BigData')
 
+    gen_list(FileList)
+
 end
 
-function DataEx = expand_data_size(Date, Data)
+function [BigData, Date, FileList] = prep_for_fusing()
 
-    DataEx = zeros(length(Date), 10);
-    Idx = ismember(Date, Data(:,1));
+    load('./mat/Index/INDEX_000001_Conv.mat')
 
-    DataEx(Idx,:) = Data;
+    Date = Data(:,1);
+
+    FileList  = [fullfile('./mat/Index/',  cellstr(ls(['./mat/Index/',  '*CONV*']))); ...
+                 fullfile('./mat/ForAdj/', cellstr(ls(['./mat/ForAdj/', 'STOCK*'])))];
+
+    BigData = zeros(size(Data,1), size(Data,2), length(FileList));
+
+end
+
+function gen_list(FileList)
+
+    disp_msg('IN', 'Generating list ...')
+
+    Len = size(FileList, 1);
+    BigDataList = cell(Len, 2);
+
+    for i = 1:Len
+
+        [~, FileName, ~] = fileparts(FileList{i});
+        C = strsplit(FileName, '_');
+        BigDataList{i,1} = C{1};
+        BigDataList{i,2} = C{2};
+
+    end
+
+    save('./mat/BigDataList', 'BigDataList')
 
 end
