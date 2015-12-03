@@ -2,17 +2,17 @@ function [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice] = ...
              do_trade(BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, i, ...
                       BuyTrigger, SellTrigger, RefPrice)
 
-    Status = is_bought(BuySignal, SellSignal);
+    if BuyTrigger && ~HoldSignal(i)
 
-    if BuyTrigger && ~Status
+        BuySignal(i)      = true;
+        HoldSignal(i:end) = true;
+        BuyPrice(i)       = calc_trade_price('BUY', RefPrice);
 
-        [BuySignal, HoldSignal, BuyPrice] = ...
-            do_buy(BuySignal, HoldSignal, BuyPrice, i, RefPrice);
+    elseif SellTrigger && HoldSignal(i)
 
-    elseif SellTrigger && Status
-
-        [SellSignal, HoldSignal, SellPrice] = ...
-            do_sell(SellSignal, HoldSignal, SellPrice, i, RefPrice);
+        SellSignal(i)       = true;
+        HoldSignal(i+1:end) = false;
+        SellPrice(i)        = calc_trade_price('SELL', RefPrice);
 
     end
 

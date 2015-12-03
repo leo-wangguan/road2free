@@ -3,9 +3,14 @@ function TradePrice = calc_trade_price(Type, Price)
     Stamp = 0.001;
     Commi = 0.0003;
 
-    Rate = ifelseif(strcmp(Type, 'BUY'),  (1 + Commi), ...
-                    strcmp(Type, 'SELL'), (1 - Commi - Stamp));
+    if strcmp(Type, 'BUY')
 
-    TradePrice = Price * Rate;
+        TradePrice = Price * (1 + Commi);
+
+    elseif strcmp(Type, 'SELL')
+
+        TradePrice = Price * (1 - Commi - Stamp);
+
+    end
 
 end

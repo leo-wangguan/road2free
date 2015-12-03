@@ -1,9 +1,9 @@
 tic
 
-clear
-
-load('./mat/List.mat')
-load('./mat/BigData.mat')
+% clear
+% 
+% load('./mat/List.mat')
+% load('./mat/BigData.mat')
 
 Start = 20100101;
 End   = 20151231;

@@ -21,6 +21,6 @@ function Res = calc_summary(Data, NewData)
     Res.BuyCount   = sum(BuySignal);
     Res.SellCount  = sum(SellSignal);
     [Res.WinRate, Res.AvgWinPct, Res.AvgLossPct] = ...
-        calc_win_rate(BuySignal, SellSignal, BuyPrice, SellPrice);
+        calc_win_rate(BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice);
 
 end

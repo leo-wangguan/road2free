@@ -11,8 +11,15 @@ function Data = conv_data(Type, Data)
     % Data = [Date Open High Low Close Before Vol Amount Factor N];
 
     % Align stock data and index data size.
-    Data = ifelseif(strcmp(Type, 'STOCK'), CalculateStockXRD(Data, [], 1), ...
-                    strcmp(Type, 'INDEX'), insert_col(Data, 8));
+    if strcmp(Type, 'STOCK')
+
+        Data = CalculateStockXRD(Data, [], 1);
+
+    elseif strcmp(Type, 'INDEX')
+
+        Data = insert_col(Data, 8);
+
+    end
 
     % Insert column 'Before'.
     Data = insert_col(Data, 6);

@@ -1,8 +1,6 @@
 function disp_msg(Type, Str)
 
-    Len = size(Str, 1);
-
-    for i = 1:Len
+    for i = 1:size(Str, 1)
 
         disp_single_msg(Type, Str(i,:))
 

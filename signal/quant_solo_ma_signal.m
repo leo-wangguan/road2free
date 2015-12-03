@@ -20,7 +20,7 @@ function ResData = quant_solo_ma_signal(Data, Arg, LongStep)
     BuySignal  = zeros(Len, 1);
     SellSignal = zeros(Len, 1);
     HoldSignal = zeros(Len, 1);
-    LongRatio  = ones(Len, 1);
+    LongRatio  = zeros(Len, 1);
 
     % Reference
     Ma = calc_ma(Close, Avg);
@@ -37,9 +37,9 @@ function ResData = quant_solo_ma_signal(Data, Arg, LongStep)
             do_trade(BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, i, ...
                      BuyTrigger, SellTrigger, RefPrice);
 
-       [LongRatio, BasePrice] = ...
-           update_long_ratio(LongRatio, LongStep, ...
-                             BuyPrice, BasePrice, HoldSignal, i);
+%        [LongRatio, BasePrice] = ...
+%            update_long_ratio(LongRatio, LongStep, ...
+%                              BuyPrice, BasePrice, HoldSignal, i);
 
     end
 
