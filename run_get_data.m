@@ -1,11 +1,17 @@
+tic
+
+clear
+
 run_get_index_data
 
-run_get_all_stock_info
+run_get_stock_info
 
-run_get_all_stock_data
+run_get_stock_data
 
-run_conv_index_data
+run_gen_list
 
-run_conv_all_stock_data
+run_conv_data
 
-run_fuse_all_data
+run_fuse_data
+
+toc

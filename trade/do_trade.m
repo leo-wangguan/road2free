@@ -1,18 +1,18 @@
 function [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice] = ...
-             do_trade(Buy, Sell, RefPrice, BuyPrice, SellPrice, ...
-                 BuySignal, SellSignal, HoldSignal, i)
+             do_trade(BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, i, ...
+                      BuyTrigger, SellTrigger, RefPrice)
 
-    Status = check_if_bought(BuySignal, SellSignal);
+    Status = is_bought(BuySignal, SellSignal);
 
-    if Buy && ~Status
+    if BuyTrigger && ~Status
 
         [BuySignal, HoldSignal, BuyPrice] = ...
-            do_buy(RefPrice, BuySignal, HoldSignal, BuyPrice, i);
+            do_buy(BuySignal, HoldSignal, BuyPrice, i, RefPrice);
 
-    elseif Sell && Status
+    elseif SellTrigger && Status
 
         [SellSignal, HoldSignal, SellPrice] = ...
-            do_sell(RefPrice, SellSignal, HoldSignal, SellPrice, i);
+            do_sell(SellSignal, HoldSignal, SellPrice, i, RefPrice);
 
     end
 

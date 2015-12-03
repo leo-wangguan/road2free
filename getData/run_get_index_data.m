@@ -1,8 +1,4 @@
-% run it as a script.
-
 function run_get_index_data()
-
-    clear
 
     cd_to_top_level()
 
@@ -11,7 +7,7 @@ function run_get_index_data()
     for i = 1:size(CodeList, 1)
 
         Code = CodeList(i,:);
-        File = ['./mat/Index/INDEX_', Code, '.mat'];
+        File = ['./mat/Index/INDEX_', Code, '_Raw.mat'];
 
         % File exist, update it.
         if exist(File, 'file') == 2

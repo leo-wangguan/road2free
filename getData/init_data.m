@@ -1,6 +1,6 @@
 function init_data(Type, Code, Start, File)
 
-    % Get data, validate data, save data.
+    % Get data, save data.
 
     disp_msg('IN', ['Initiating ', lower(Type), ' ', Code, ' ...'])
 
@@ -8,9 +8,7 @@ function init_data(Type, Code, Start, File)
 
     if ~isempty(Data)
 
-        validate_data(Data)
-
-        save(File, 'Data')
+        save_data(Data, File)
 
     else
 

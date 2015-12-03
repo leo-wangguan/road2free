@@ -1,5 +1,5 @@
 function [SellSignal, HoldSignal, SellPrice] = ...
-             do_sell(RefPrice, SellSignal, HoldSignal, SellPrice, i)
+             do_sell(SellSignal, HoldSignal, SellPrice, i, RefPrice)
 
     SellSignal(i)       = true;
     HoldSignal(i+1:end) = false;

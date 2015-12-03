@@ -1,7 +1,7 @@
 function [WinRate, AvgWinPct, AvgLossPct] = ...
              calc_win_rate(BuySignal, SellSignal, BuyPrice, SellPrice)
 
-    if check_if_bought(BuySignal, SellSignal)
+    if is_bought(BuySignal, SellSignal)
 
         SellSignal(end) = true;
 
