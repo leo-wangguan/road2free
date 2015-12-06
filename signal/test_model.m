@@ -1,6 +1,7 @@
-function [NewData, Summ] = test_model(BigData, List, Start, End, quant_signal, Arg, LongStep)
+function [NewData, Summ] = test_model(BigData, List, Start, End, ...
+                                      quant_signal, Arg, CutPct, LongStep)
 
-    % Ensure the output of all models can calculate the delta of each day.
+    % Ensure the output of all models are able to calculate delta of each day.
     %
     % In general, one delta of a day is calculated by subtracting the close
     % price of the day before from that of the day, Close(i) - Before(i).
@@ -29,7 +30,7 @@ function [NewData, Summ] = test_model(BigData, List, Start, End, quant_signal, A
 
         if ~isempty(Data)
 
-            ResData = quant_signal(Data, Arg, LongStep);
+            ResData = quant_signal(Data, Arg, CutPct, LongStep);
             Summ{i} = calc_summary(Data, ResData);
             NewData(:,:,i) = restore_data(ResData, Flag);
 

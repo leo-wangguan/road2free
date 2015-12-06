@@ -1,25 +1,21 @@
-function show_plot(Name, Data, DatePair, func_signal, Arg)
+function show_plot(Name, NewData, Summ, quant_signal, Arg)
 
-    [~, ~, StartPrice, ~, ~, HistPct, ...
-        ~, ModelPct, ~, ~, WinRate, AvgWinPct, AvgLossPct, ...
-            NewData] = ...
-                backtest_model(Data, DatePair, func_signal, Arg);
-
+    NewData    = squeeze_data(NewData);
     Date       = NewData(:,1);
     Close      = NewData(:,5);
-    BuySignal  = NewData(:,10);
-    SellSignal = NewData(:,11);
-    HoldSignal = NewData(:,12);
-    BuyPrice   = NewData(:,13);
-    SellPrice  = NewData(:,14);
+    BuySignal  = NewData(:,11);
+    SellSignal = NewData(:,12);
+    HoldSignal = NewData(:,13);
+    BuyPrice   = NewData(:,14);
+    SellPrice  = NewData(:,15);
 
     figure
     subplot(2, 1, 1)
     show_signal(Date, Close, BuyPrice, SellPrice, BuySignal, SellSignal, HoldSignal)
-    set_signal_title(Name, HistPct, ModelPct, func_signal, Arg)
+    set_signal_title(Name, Summ.HistPct, Summ.ModelPct, quant_signal, Arg)
     subplot(2, 1, 2)
-    do_show_pct(StartPrice, Close, HoldSignal, BuyPrice, SellPrice)
-    set_pct_title(WinRate, AvgWinPct, AvgLossPct)
+    do_show_pct(Summ.StartPrice, Close, HoldSignal, BuyPrice, SellPrice)
+    set_pct_title(Summ.WinRate, Summ.AvgWinPct, Summ.AvgLossPct)
 
 end
 

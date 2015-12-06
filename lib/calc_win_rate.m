@@ -1,14 +1,11 @@
 function [WinRate, AvgWinPct, AvgLossPct] = ...
              calc_win_rate(BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice)
 
-    if HoldSignal(end)
+    % Even if not selled at last, mark it as be.
+    SellSignal(end) = HoldSignal(end);
 
-        SellSignal(end) = true;
-
-    end
-
-    [~, ~, BuyPrice]  = find(BuyPrice  .* BuySignal);
-    [~, ~, SellPrice] = find(SellPrice .* SellSignal);
+    BuyPrice  = BuyPrice(logical(BuySignal));
+    SellPrice = SellPrice(logical(SellSignal));
 
     Pct = SellPrice ./ BuyPrice - 1;
 
