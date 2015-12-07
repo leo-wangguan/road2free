@@ -6,8 +6,10 @@ function MA = calc_ma(A, Avg)
 
     for i = 1:Len
 
-        MA(i) = sum(A(Idx(i):i)) ./ Avg;
+        MA(i) = sum(A(Idx(i):i));
 
     end
+
+    MA = MA / Avg;
 
 end
