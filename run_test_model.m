@@ -1,11 +1,13 @@
 tic
 
 % clear
+%
+% global List
 % 
 % load('./mat/List.mat')
 % load('./mat/BigData.mat')
 
-Start = 20100101;
+Start = 20150101;
 End   = 20151231;
 
 quant_signal = @quant_solo_ma_signal;
