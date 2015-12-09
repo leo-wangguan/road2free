@@ -1,4 +1,4 @@
-function NewData = get_extrem_close_signal(Data, DatePair, Arg)
+function ResData = get_extrem_close_signal(Data, DatePair, Arg)
 
     % Parse arguments
     IntvBuy  = Arg{1};

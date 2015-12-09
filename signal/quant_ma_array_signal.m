@@ -1,4 +1,4 @@
-function NewData = get_ma_array_signal(Data, Arg, CutPct, LongStep)
+function ResData = get_ma_array_signal(Data, Arg, CutPct, LongStep)
 
     % Parse arguments
     Avg1   = Arg{1};
