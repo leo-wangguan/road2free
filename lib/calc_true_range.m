@@ -4,6 +4,6 @@ function TR = calc_true_range(High, Low, Before)
     B = High - Before;
     C = Before - Low;
 
-    TR = max([A B C], [], 2);
+    TR = max([A, B, C], [], 2);
 
 end

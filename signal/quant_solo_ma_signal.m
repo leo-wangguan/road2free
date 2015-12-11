@@ -1,8 +1,4 @@
-function ResData = quant_solo_ma_signal(Data, Arg, CutPct, LongStep)
-
-    % Parse arguments
-    Avg    = Arg{1};
-    Offset = Arg{end};
+function ResData = quant_solo_ma_signal(Data, Arg)
 
     % Pre-processing
     Close     = Data(:,5);
@@ -11,7 +7,7 @@ function ResData = quant_solo_ma_signal(Data, Arg, CutPct, LongStep)
 
     % References
     TradePrice = Close;
-    Ma = calc_ma(Close, Avg);
+    Ma = calc_ma(Close, Arg.Avg);
 
     % Triggers
     BuyTrigger  = (Close >= Ma) .* (Ma >= shift(Ma, 1));
@@ -20,7 +16,7 @@ function ResData = quant_solo_ma_signal(Data, Arg, CutPct, LongStep)
     % Trading
     [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio] = ...
         do_trade(BuyPrice, SellPrice, BuyTrigger, SellTrigger, TradePrice, ... 
-                 Offset, CutPct, LongStep);
+                 Arg.Offset, Arg.CutPct, Arg.LongStep);
 
     % Post-processing
     ResData = [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio];

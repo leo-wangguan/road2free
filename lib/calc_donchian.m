@@ -1,13 +1,7 @@
-function D = calc_donchian(A, func, Arg)
-
-    Len = length(A);
-    D   = zeros(Len, 1);
-    Idx = [ones(Arg, 1); (2:Len-Arg+1)'];
-
-    for i = 1:Len
-
-        D(i) = max(A(Idx(i):i));
-
-    end
+function DC = calc_donchian(A, func, Intv)
+ 
+    H = hankel(1:Intv, Intv:Intv+length(A)-1)';
+    A = [zeros(Intv - 1, 1); A];
+    DC = func(A(H), [], 2);
 
 end

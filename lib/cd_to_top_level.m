@@ -1,15 +1,8 @@
 function cd_to_top_level()
 
-    A = strsplit(pwd, '\');
+    A   = strsplit(pwd, '\');
+    End = find(strcmp(A, 'road2free'));
 
-    for i = length(A):-1:1
-
-        if strcmp(A(i), 'road2free')
-
-            cd(strjoin(A(1:i),'\'))
-
-        end
-
-    end
+    cd(strjoin(A(1:End), '\'))
 
 end

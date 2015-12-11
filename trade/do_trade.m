@@ -3,9 +3,9 @@ function [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio] = .
                       Offset, CutPct, LongStep)
 
     Len        = length(BuyPrice);
-    BuySignal  = zeros(Len, 1);
-    SellSignal = zeros(Len, 1);
-    HoldSignal = zeros(Len, 1);
+    BuySignal  = false(Len, 1);
+    SellSignal = false(Len, 1);
+    HoldSignal = false(Len, 1);
     LongRatio  = zeros(Len, 1);
 
     Start = 0;

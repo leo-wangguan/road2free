@@ -1,9 +1,4 @@
-function ResData = get_extrem_close_signal(Data, DatePair, Arg)
-
-    % Parse arguments
-    IntvBuy  = Arg{1};
-    IntvSell = Arg{2};
-    Offset   = Arg{end};
+function ResData = quant_turtle_close_signal(Data, Arg)
 
     % Pre-processing
     High      = Data(:,3);
@@ -14,8 +9,8 @@ function ResData = get_extrem_close_signal(Data, DatePair, Arg)
 
     % References
     TradePrice = Close;
-    Max = calc_donchian(High, @max, IntvBuy)
-    Min = calc_donchian(Low,  @min, IntvSell)
+    Max = calc_donchian(High, @max, Arg.IntvBuy);
+    Min = calc_donchian(Low,  @min, Arg.IntvSell);
 
     % Triggers
     BuyTrigger  = Close > Max;
@@ -24,7 +19,7 @@ function ResData = get_extrem_close_signal(Data, DatePair, Arg)
     % Trading
     [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio] = ...
         do_trade(BuyPrice, SellPrice, BuyTrigger, SellTrigger, TradePrice, ... 
-                 Offset, CutPct, LongStep);
+                 Arg.Offset, Arg.CutPct, Arg.LongStep);
 
     % Post-processing
     ResData = [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio];

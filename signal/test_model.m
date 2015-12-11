@@ -1,5 +1,4 @@
-function [NewData, Summ] = test_model(BigData, List, Start, End, ...
-                                      quant_signal, Arg, CutPct, LongStep)
+function [NewData, Summary] = test_model(BigData, List, quant_signal, Arg)
 
     % Ensure the output of all models are able to calculate delta of each day.
     %
@@ -20,18 +19,17 @@ function [NewData, Summ] = test_model(BigData, List, Start, End, ...
     %
     % ResData = [BuySignal SellSignal HoldSignal BuyPrice SellPrice LongRatio];
 
-    BigData = cut_data(BigData, List.Date, Start, End, Arg{end});
     NewData = zeros(size(BigData, 1), List.ResLen, List.FileLen);
-    Summ    = cell(List.FileLen, 1);
+    Summary = cell(List.FileLen, 1);
 
-    parfor i = 1:List.FileLen
+    for i = 1:List.FileLen
 
         [Data, Flag] = squeeze_data(BigData(:,:,i));
 
         if ~isempty(Data)
 
-            ResData = quant_signal(Data, Arg, CutPct, LongStep);
-            Summ{i} = calc_summary(Data, ResData);
+            ResData = quant_signal(Data, Arg);
+            Summary{i} = calc_summary(Data, ResData);
             NewData(:,:,i) = restore_data(ResData, Flag);
 
         end

@@ -13,7 +13,7 @@ function run_gen_list()
 
     List.Code = cellfun(@(x) regexp(x, '\d{6}', 'match'), List.File, 'uni', false);
 
-    List.Abbr = cellfun(@(x, y) [x{:}(1) y{:}], List.Type, List.Code, 'uni', false);
+    List.Abbr = cellfun(@(x, y) [x{:}(1), y{:}], List.Type, List.Code, 'uni', false);
 
     load('./mat/Index/INDEX_000001_Raw.mat')
 

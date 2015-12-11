@@ -1,9 +1,4 @@
-function ResData = quant_duo_ma_cross_signal(Data, Arg, CutPct, LongStep)
-
-    % Parse arguments
-    AvgShort = Arg{1};
-    AvgLong  = Arg{2};
-    Offset   = Arg{end};
+function ResData = quant_duo_ma_cross_signal(Data, Arg)
 
     % Pre-processing
     Close     = Data(:,5);
@@ -12,8 +7,8 @@ function ResData = quant_duo_ma_cross_signal(Data, Arg, CutPct, LongStep)
 
     % References
     TradePrice = Close;
-    MaLong  = calc_ma(Close, AvgLong);
-    MaShort = calc_ma(Close, AvgShort);
+    MaLong  = calc_ma(Close, Arg.AvgLong);
+    MaShort = calc_ma(Close, Arg.AvgShort);
 
     % Triggers
     BuyTrigger  = (MaShort > MaLong) .* (MaShort > shift(MaShort, 1));
@@ -22,7 +17,7 @@ function ResData = quant_duo_ma_cross_signal(Data, Arg, CutPct, LongStep)
     % Trading
     [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio] = ...
         do_trade(BuyPrice, SellPrice, BuyTrigger, SellTrigger, TradePrice, ...
-                 Offset, CutPct, LongStep);
+                 Arg.Offset, Arg.CutPct, Arg.LongStep);
 
     % Post-processing
     ResData = [BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice, LongRatio];

@@ -1,11 +1,25 @@
-function BigData = cut_data(BigData, Date, Start, End, Offset)
+function Data = cut_data(Data, Date, Start, End, Offset)
 
     % Cut data according to date pair and offset.
 
-    Aux      = find(Date >= Start, 1) - Offset;
-    StartIdx = ifelse(Aux < 1, 1, Aux);
-    EndIdx   = find(Date <= End,   1, 'last');
+    if nargin == 4
 
-    BigData = BigData(StartIdx:EndIdx,:,:);
+        Duration = mask_date(Date, Start, End);
+
+    elseif nargin == 5
+
+        Duration = mask_date(Date, Start, End, Offset);
+
+    end
+
+    if ndims(Data) == 3
+
+        Data = Data(Duration,:,:);
+
+    elseif ndims(Data) == 2
+
+        Data = Data(Duration,:);
+
+    end
 
 end
