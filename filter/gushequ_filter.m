@@ -21,7 +21,7 @@ function Result = gushequ_filter(BigDataS, DayIndex)
 end
 
 function Result = condition1(Stock,DayIndex)
-    Result = Stock.Amount(DayIndex-1) < Stock.Amount(DayIndex-2)*2;
+    Result = Stock.Vol(DayIndex-1) < Stock.Vol(DayIndex-2)*2;
 end
 
 function Result = condition2(Stock,DayIndex)
@@ -29,7 +29,7 @@ function Result = condition2(Stock,DayIndex)
 end
 
 function Result = condition3(Stock,DayIndex)
-    Result = Stock.Amount(DayIndex) < (Stock.Amount(DayIndex-1))*2;
+    Result = Stock.Vol(DayIndex) < (Stock.Vol(DayIndex-1))*2;
 end
 
 function Result = condition4(Stock, DayIndex)
