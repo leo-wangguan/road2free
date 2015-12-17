@@ -12,14 +12,6 @@ function Data = cut_data(Data, Date, Start, End, Offset)
 
     end
 
-    if ndims(Data) == 3
-
-        Data = Data(Duration,:,:);
-
-    elseif ndims(Data) == 2
-
-        Data = Data(Duration,:);
-
-    end
+    Data = Data(Duration,:,:);
 
 end

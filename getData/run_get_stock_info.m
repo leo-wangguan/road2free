@@ -57,7 +57,7 @@ end
 function update_stock_info(StockInfo, ListOld, ListNew)
 
     % Find indices of old codes w.r.t new list.
-    Idx1 = ismember([ListNew{:,3}], [ListOld{:,3}])';
+    Idx1 = ismember([ListNew{:,3}]', [ListOld{:,3}]');
 
     % If codes added.
     if sum(Idx1) < size(ListNew, 1)
