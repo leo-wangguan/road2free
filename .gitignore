@@ -4,9 +4,8 @@ mat/Index/
 mat/BigData.mat
 mat/BigDataS.mat
 mat/List.mat
-mat/*
+mat/StockInfo.mat
 
-mat3/
-
+log/*
 *.asv
 

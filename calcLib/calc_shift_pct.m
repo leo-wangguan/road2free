@@ -1,6 +1,6 @@
-function Pct = calc_shift_pct(A, N)
+function Pct = calc_shift_pct(InterpA, N)
 
-    Pct = A ./ shift(A, N);
+    Pct = InterpA ./ shift(InterpA, N);
     Pct(isinf(Pct)) = 0;
     Pct(isnan(Pct)) = 0;
 
