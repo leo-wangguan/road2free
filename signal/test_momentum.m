@@ -13,7 +13,7 @@ function Profit = test_momentum(BigData, List, Compo, Start, TotalN, ExchgN, Int
     % Mode:   top or random.
 
     % Filter big data with component abbreviations.
-%     BigData = BigData(:,:,ismember(List.Abbr, unique(Compo(:,1))));
+    BigData = BigData(:,:,ismember(List.Abbr, unique(Compo(:,1))));
 
     % Assume trading on closing.
     Price = reshape(BigData(:,5,:), [], size(BigData, 3));
@@ -28,8 +28,7 @@ function Profit = test_momentum(BigData, List, Compo, Start, TotalN, ExchgN, Int
     ShiftPct = calc_shift_pct_2d(InterpPrice, ShiftN);
 
     % Mask component signal with date.
-%     CompoSignal = mask_compo_signal(Compo, List.Date);
-    CompoSignal = ones(size(Price));
+    CompoSignal = mask_compo_signal(Compo, List.Date);
 
     % Start from the day components were full.
     StartIdx = find(List.Date >= Start, 1);
@@ -47,8 +46,6 @@ end
 
 function PoolSignal = trade(CompoSignal, ShiftPct, IsBuyable, IsSellable, StartIdx, TotalN, ExchgN, IntvN, Mode)
 
-    load('./mat/List.mat')
-
     % True when stock is in pool.
     PoolSignal = false(size(CompoSignal));
 
@@ -58,9 +55,6 @@ function PoolSignal = trade(CompoSignal, ShiftPct, IsBuyable, IsSellable, StartI
 
     % Update every several days.
     for i = StartIdx+IntvN:IntvN:size(CompoSignal, 1)
-
-        disp_msg('DA', num2str(List.Date(i)))
-        disp_msg('IN', cell2mat(List.Abbr(PoolSignal(i,:))))
 
         % Rank stocks inside and outside pool, separately.
         InRank  = rank_non_zero(ShiftPct(i,:) .* IsSellable(i,:) .*  PoolSignal(i,:));
@@ -75,12 +69,6 @@ function PoolSignal = trade(CompoSignal, ShiftPct, IsBuyable, IsSellable, StartI
         end
 
         RealExchgNum = min(ExchgN, length(InRank));
-
-        disp_msg('SE', cell2mat(List.Abbr(InRank(end-RealExchgNum+1:end))))
-        disp_msg('SE', num2str(ShiftPct(i,InRank(end-RealExchgNum+1:end))))
-        disp_msg('BY', cell2mat(List.Abbr(OutRank(1:RealExchgNum))))
-        disp_msg('BY', num2str(ShiftPct(i,OutRank(1:RealExchgNum))))
-
         PoolSignal(i+1:end,InRank(end-RealExchgNum+1:end)) = false;
         PoolSignal(i+1:end,OutRank(1:RealExchgNum))        = true;
 
