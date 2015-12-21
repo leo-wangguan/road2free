@@ -13,7 +13,7 @@ function Profit = test_momentum(BigData, List, Compo, Start, TotalN, ExchgN, Int
     % Mode:   top or random.
 
     % Filter big data with component abbreviations.
-    BigData = BigData(:,:,ismember(List.Abbr, unique(Compo(:,1))));
+%     BigData = BigData(:,:,ismember(List.Abbr, unique(Compo(:,1))));
 
     % Assume trading on closing.
     Price = reshape(BigData(:,5,:), [], size(BigData, 3));
@@ -28,8 +28,8 @@ function Profit = test_momentum(BigData, List, Compo, Start, TotalN, ExchgN, Int
     ShiftPct = calc_shift_pct_2d(InterpPrice, ShiftN);
 
     % Mask component signal with date.
-    CompoSignal = mask_compo_signal(Compo, List.Date);
-    % CompoSignal = ones(size(Price));
+%     CompoSignal = mask_compo_signal(Compo, List.Date);
+    CompoSignal = ones(size(Price));
 
     % Start from the day components were full.
     StartIdx = find(List.Date >= Start, 1);
