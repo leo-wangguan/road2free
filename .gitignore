@@ -6,6 +6,6 @@ mat/BigDataS.mat
 mat/List.mat
 mat/StockInfo.mat
 
-log/*
+log/
 *.asv
 
