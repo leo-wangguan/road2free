@@ -35,7 +35,15 @@ function Data = conv_data(Type, Data)
     end
 
     % Insert column 'N'.
-    Data(:,10) = calc_n(Data(:,3), Data(:,4), Data(:,6), 20);
+    if size(Data, 1) >= 20
+
+        Data(:,10) = calc_n(Data(:,3), Data(:,4), Data(:,6), 20);
+
+    else
+
+        Data(:,10) = 0;
+
+    end
 
     % Insert column 'IsBuyable' and 'IsSellable', calculated with close price.
     [Data(:,11), Data(:,12)] = check_tradability(Data(:,5));
