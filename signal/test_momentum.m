@@ -13,16 +13,13 @@ function Profit = test_momentum(BigData, List, Compo, Start, TotalN, ExchgN, Int
     % Mode:   top or random.
 
     % Filter big data with component abbreviations.
-    BigData = BigData(:,:,ismember(List.Abbr, unique(Compo(:,1))));
-
-    % Assume trading on closing.
-    Price = reshape(BigData(:,5,:), [], size(BigData, 3));
+    BigData    = BigData(:,:,ismember(List.Abbr, unique(Compo(:,1))));
+    Close      = reshape(BigData(:, 5,:), [], size(BigData, 3));
+    IsBuyable  = reshape(BigData(:,11,:), [], size(BigData, 3));
+    IsSellable = reshape(BigData(:,12,:), [], size(BigData, 3));
 
     % Calculate interpolation for continuous.
-    InterpPrice = calc_interp_2d(Price);
-
-    % Check buy-ability and sell-ability.
-    [IsBuyable, IsSellable] = check_tradability_2d(InterpPrice, Price);
+    InterpPrice = calc_interp_2d(Close);
 
     % Calculate shift percentage.
     ShiftPct = calc_shift_pct_2d(InterpPrice, ShiftN);
@@ -68,7 +65,7 @@ function PoolSignal = trade(CompoSignal, ShiftPct, IsBuyable, IsSellable, StartI
 
         end
 
-        RealExchgNum = min(ExchgN, length(InRank));
+        RealExchgNum = min([ExchgN, length(InRank), length(OutRank)]);
         PoolSignal(i+1:end,InRank(end-RealExchgNum+1:end)) = false;
         PoolSignal(i+1:end,OutRank(1:RealExchgNum))        = true;
 

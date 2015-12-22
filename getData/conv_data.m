@@ -5,10 +5,13 @@ function Data = conv_data(Type, Data)
     % Align data size;
     % Insert a column represents before close price;
     % Insert a column represents average true range.
+    % Insert a column represents buy-ability.
+    % Insert a column represents sell-ability.
     %
     % Data = [Date Open High Low Close Vol Amount Factor];
     %
-    % Data = [Date Open High Low Close Before Vol Amount Factor N];
+    % Data = [Date Open High Low Close Before Vol Amount Factor N
+    %         IsBuyable IsSellable];
 
     % Align stock data and index data size.
     if strcmp(Type, 'STOCK')
@@ -33,5 +36,8 @@ function Data = conv_data(Type, Data)
 
     % Insert column 'N'.
     Data(:,10) = calc_n(Data(:,3), Data(:,4), Data(:,6), 20);
+
+    % Insert column 'IsBuyable' and 'IsSellable', calculated with close price.
+    [Data(:,11), Data(:,12)] = check_tradability(Data(:,5));
 
 end
