@@ -1,4 +1,4 @@
-function [IsBuyable, IsSellable] = check_tradability(Price, InterpPrice)
+function [Buyable, Sellable] = check_tradability(Price, InterpPrice)
 
     if nargin == 1
 
@@ -11,7 +11,7 @@ function [IsBuyable, IsSellable] = check_tradability(Price, InterpPrice)
 
     IsTrading = Price > 0;
 
-    IsBuyable  = IsTrading & ~IsUpLim;
-    IsSellable = IsTrading & ~IsDnLim;
+    Buyable  = IsTrading & ~IsUpLim;
+    Sellable = IsTrading & ~IsDnLim;
 
 end

@@ -1,6 +1,7 @@
-function Profit = calc_daily_profit_2d(DailyPct, PoolSignal, StartIdx)
+function Profit = calc_daily_profit_2d(DailyPct, PoolSignal)
 
     Profit = zeros(size(PoolSignal));
+    StartIdx = find(sum(PoolSignal, 2),1);
     Profit(StartIdx,:) = PoolSignal(StartIdx,:) * 1;
 
     for i = StartIdx+1:size(DailyPct, 1)
