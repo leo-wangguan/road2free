@@ -1,4 +1,4 @@
-function Data = filter_data(BigData, Item)
+function Data = pick_data(BigData, Item)
 
     switch Item
 

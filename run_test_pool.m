@@ -4,12 +4,14 @@ clear
 
 load('./mat/List.mat')
 load('./mat/BigData.mat')
-load('./mat/Compo/399006_Compo.mat')
+load('./mat/Compo/399006.mat')
 
 Arg.TotalN = 20;
-Arg.ExchgN = 5;
-Arg.IntvN  = 20;
-Arg.ShiftN = 100;
+Arg.RemaiN = 16;
+Arg.IntvlN = 70;
+Arg.ShiftN = 20;
+Arg.CutPct = 0.8;
+Arg.MinPct = 1.1;
 Arg.Start  = 20100820;
 
 A = test_momentum(BigData, List, Compo, Arg);
