@@ -8,13 +8,13 @@ load('./mat/Compo/399006.mat')
 
 Arg.TotalN = 20;
 Arg.RemaiN = 16;
-Arg.IntvlN = 70;
-Arg.ShiftN = 20;
-Arg.CutPct = 0.8;
-Arg.MinPct = 1.1;
+Arg.IntvlN = 21;
+Arg.ShiftN = 43;
+Arg.CutPct = 0;
+Arg.MinPct = 0;
 Arg.Start  = 20100820;
 
-A = test_momentum(BigData, List, Compo, Arg);
-A(end)
+[A, B] = test_momentum(BigData, List, Compo, Arg);
+sum(A(end,:)+B(end))
 
 toc

@@ -39,7 +39,7 @@ function [StockInfo, IpoDate] = get_stock_info()
     load('./mat/StockInfo.mat')
     load('./mat/StockInfoPatch.mat')
 
-    IpoDate = cellfun(@(x) x.IPOdate, StockInfo(:,4), 'uni', false );
+    IpoDate = cellfun(@(x) x.IPOdate, StockInfo(:,4), 'uni', false);
     IpoDate(ismember([StockInfo{:,3}], [StockInfoPatch{:,1}])) = StockInfoPatch(:,2);
 
 end

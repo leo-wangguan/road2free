@@ -4,14 +4,11 @@ function Data = cut_data(Data, Date, Start, End, Offset)
 
     if nargin == 4
 
-        Duration = mask_date(Date, Start, End);
-
-    elseif nargin == 5
-
-        Duration = mask_date(Date, Start, End, Offset);
+        Offset = 0;
 
     end
 
+    Duration = mask_date(Date, Start, End, Offset);
     Data = Data(Duration,:,:);
 
 end

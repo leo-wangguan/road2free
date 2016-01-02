@@ -1,16 +1,14 @@
 function Duration = mask_date(Date, Start, End, Offset)
 
+    % Mask date according to date pair and offset.
+
     if nargin == 3
 
-        Duration = (Date >= Start) & (Date <= End);
-
-    elseif nargin == 4
-
-        Aux      = find(Date >= Start, 1) - Offset;
-        StartIdx = ifelse(Aux < 1, 1, Aux);
-        EndIdx   = find(Date <= End, 1, 'last');
-        Duration = logical(Date(StartIdx:EndIdx));
+        Offset = 0;
 
     end
+
+    StartIdx = max(find(Date >= Start, 1) - Offset, 1);
+    Duration = (Date >= Date(StartIdx)) & (Date <= End);
 
 end

@@ -46,7 +46,7 @@ function get_stock_info(StockInfo)
             StockInfo{i,4} = GetStockInfo_Web(Code);
 
             % URL read may get error, save data right away.
-            save('./mat/StockInfo.mat', 'StockInfo')
+            save('./mat/StockInfo', 'StockInfo')
 
         end
 

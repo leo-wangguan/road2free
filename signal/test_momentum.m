@@ -1,4 +1,4 @@
-function Profit = test_momentum(BigData, List, Compo, Arg)
+function [Profit, Aval] = test_momentum(BigData, List, Compo, Arg)
 
     % TotalN: total amount in pool.
     %
@@ -39,6 +39,6 @@ function Profit = test_momentum(BigData, List, Compo, Arg)
     DailyPct = calc_shift_pct_2d(InterpPrice, 1);
 
     % Calculate daily profit.
-    Profit = calc_daily_profit_2d(DailyPct, PoolSignal, Arg.TotalN);
+    [Profit, Aval] = calc_daily_profit_2d(DailyPct, PoolSignal, Arg.TotalN);
 
 end

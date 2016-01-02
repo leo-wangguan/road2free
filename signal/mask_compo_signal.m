@@ -13,6 +13,7 @@ function CompoSignal = mask_compo_signal(Compo, Date)
     Idx = arrayfun(@(x) find(x == RepIdx), 1:length(UniIdx), 'uni', false);
 
     % Combine date masks for the same stock.
-    CompoSignal = cell2mat(cellfun(@(x) sum([DateMask{x}], 2), Idx, 'uni', false));
+    CompoSignal = cellfun(@(x) sum([DateMask{x}], 2), Idx, 'uni', false);
+    CompoSignal = [CompoSignal{:}];
 
 end

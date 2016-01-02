@@ -9,11 +9,11 @@ function run_gen_list()
 
     List.Conv = strrep(strrep(List.File, 'Raw', 'Conv'), 'ExDiv', 'ForAdj');
 
-    List.Type = cellfun(@(x) regexp(x, 'INDEX|STOCK', 'match'), List.File, 'uni', false);
+    List.Type = cellfun(@(x) regexp(x, 'INDEX|STOCK', 'match'), List.File);
 
-    List.Code = cellfun(@(x) regexp(x, '\d{6}', 'match'), List.File, 'uni', false);
+    List.Code = cellfun(@(x) regexp(x, '\d{6}', 'match'), List.File);
 
-    List.Abbr = cellfun(@(x, y) [x{:}(1), y{:}], List.Type, List.Code, 'uni', false);
+    List.Abbr = cellfun(@(x, y) [x(1), y], List.Type, List.Code, 'uni', false);
 
     load('./mat/Index/INDEX_000001_Raw.mat')
 
