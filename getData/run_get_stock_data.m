@@ -2,7 +2,7 @@ function run_get_stock_data()
 
     cd_to_top_level()
 
-    [StockInfo, IpoDate] = get_stock_info();
+    [StockInfo, IpoDate] = load_stock_info();
 
     parfor i = 1:size(StockInfo, 1)
 
@@ -34,7 +34,7 @@ function run_get_stock_data()
 
 end
 
-function [StockInfo, IpoDate] = get_stock_info()
+function [StockInfo, IpoDate] = load_stock_info()
 
     load('./mat/StockInfo.mat')
     load('./mat/StockInfoPatch.mat')
