@@ -1,7 +1,7 @@
 tic
 
-clear
+%clear
 
-do_run_filter('today')
+do_run_filter('20150116')
 
 toc
