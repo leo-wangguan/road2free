@@ -7,8 +7,8 @@ clear
 load('./mat/List.mat')
 load('./mat/BigData.mat')
 
-Start = 20100101;
-End   = 20110130;
+Start = 20150106;
+End   = 20151230;
 
 quant_signal = @quant_gushequ_signal;
 Arg = {120};

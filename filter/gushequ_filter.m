@@ -21,7 +21,8 @@ function Result = gushequ_filter(BigDataS, DayIndex)
 end
 
 function Result = condition1(Stock,DayIndex)
-    Result = Stock.Vol(DayIndex-1) < Stock.Vol(DayIndex-2)*2;
+%     Result = Stock.Vol(DayIndex-1) < Stock.Vol(DayIndex-2)*2;
+    Result = get_nonzero_val(Stock.Vol,DayIndex,-1) < (get_nonzero_val(Stock.Vol,DayIndex,-2))*2;
 end
 
 function Result = condition2(Stock,DayIndex)
@@ -29,7 +30,8 @@ function Result = condition2(Stock,DayIndex)
 end
 
 function Result = condition3(Stock,DayIndex)
-    Result = Stock.Vol(DayIndex) < (Stock.Vol(DayIndex-1))*2;
+%     Result = Stock.Vol(DayIndex) < (Stock.Vol(DayIndex-1))*2;
+    Result = Stock.Vol(DayIndex) < (get_nonzero_val(Stock.Vol,DayIndex,-1))*2;
 end
 
 function Result = condition4(Stock, DayIndex)
@@ -37,11 +39,13 @@ function Result = condition4(Stock, DayIndex)
 end
 
 function Result = condition5(Stock, DayIndex)
-    Result = Stock.Low(DayIndex) < Stock.High(DayIndex-1);
+%     Result = Stock.Low(DayIndex) < Stock.High(DayIndex-1);
+    Result = Stock.Low(DayIndex) < get_nonzero_val(Stock.High,DayIndex,-1);
 end
 
 function Result = condition6(Stock, DayIndex)
-    Result = Stock.Close(DayIndex-1) > (Stock.Open(DayIndex-1))*1.02;
+%     Result = Stock.Close(DayIndex-1) > (Stock.Open(DayIndex-1))*1.02;
+    Result = get_nonzero_val(Stock.Close,DayIndex,-1) > (get_nonzero_val(Stock.Open,DayIndex,-1))*1.02;
 end
 
 function Result = condition7(Stock, DayIndex)
@@ -49,7 +53,8 @@ function Result = condition7(Stock, DayIndex)
 end
 
 function Result = condition8(Stock, DayIndex)
-    Result = Stock.Close(DayIndex-1) > (Stock.Close(DayIndex-2))*1.095;
+%     Result = Stock.Close(DayIndex-1) > (Stock.Close(DayIndex-2))*1.095;
+    Result = get_nonzero_val(Stock.Close,DayIndex,-1) > (get_nonzero_val(Stock.Close,DayIndex,-2))*1.095;
 end
 
 function Result = condition9(Stock, DayIndex)
