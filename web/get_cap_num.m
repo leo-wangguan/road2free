@@ -3,7 +3,7 @@ function CapNum = get_cap_num(Code)
     Total = do_get(Code, 'TotalStock');
     Float = do_get(Code, 'LiuTongA') - do_get(Code, 'GaoGuan');
 
-    CapNum = [Total, Float(:,2)];
+    CapNum = num2cell([Total, Float(:,2)]);
 
 end
 
@@ -17,8 +17,7 @@ function CapNum = do_get(Code, Path)
     Date = cellfun(@(x) yyyymmdd(datetime(x)), Date);
 
     Num  = regexp(Src, '<div align="center">(\d+?(\.\d+)?\w股)</div>', 'tokens');
-    Num  = cellfun(@(x) regexprep(x, '万股', ''), Num);
-    Num  = cellfun(@(x) str2double(x) * 10000, Num);
+    Num  = cellfun(@(x) str2double(regexprep(x, '万股', '')) * 1e4, Num);
 
     CapNum = [Date' Num'];
 

@@ -1,22 +1,17 @@
-function Data = conv_data(Type, Data)
+function Data = conv_data(Type, Data, CapNum)
 
-    % Convert data with following steps:
-    %
-    % Align data size;
-    % Insert a column represents before close price;
-    % Insert a column represents average true range.
-    % Insert a column represents buy-ability.
-    % Insert a column represents sell-ability.
-    %
     % Data = [Date Open High Low Close Vol Amount Factor];
     %
     % Data = [Date Open High Low Close Before Vol Amount Factor N
-    %         Buyable Sellable];
+    %         Buyable Sellable TotalCap FloatCap TotalMaket FloatMaket];
 
-    % Expand the number of columns to 12.
-    Data(:,12) = 0;
+    % Save ex-dividend close price to calculate market cap later.
+    ExDivClose = Data(:,5);
 
-    % Align stock data and index data size.
+    % Expand the number of columns to 16.
+    Data(:,16) = 0;
+
+    % Calculate forward adjusted price.
     if strcmp(Type, 'STOCK')
 
         Data(:,1:8) = CalculateStockXRD(Data(:,1:8), [], 1);
@@ -29,13 +24,18 @@ function Data = conv_data(Type, Data)
     Data(1,6)   = Data(1,2);
 
     % Insert column 'N'.
-    if size(Data, 1) >= 20
-
-        Data(:,10) = calc_n(Data(:,3), Data(:,4), Data(:,6), 20);
-
-    end
+    Data(:,10) = calc_n(Data(:,3), Data(:,4), Data(:,6));
 
     % Insert column 'Buyable' and 'Sellable', calculated with close price.
-    [Data(:,11), Data(:,12)] = check_tradability(Data(:,5));
+    [Data(:,11), Data(:,12)] = calc_tradability(Data(:,5));
+
+    % Insert column 'TotalCap', 'FloatCap', 'TotalMarket' and 'FloatMarket'.
+    if strcmp(Type, 'STOCK')
+
+        [Data(:,13), Data(:,14)] = mask_cap_num(Data(:,1), CapNum);
+        Data(:,15) = Data(:,13) .* ExDivClose / 1e8;
+        Data(:,16) = Data(:,14) .* ExDivClose / 1e8;
+
+    end
 
 end

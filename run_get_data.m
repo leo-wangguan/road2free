@@ -8,6 +8,8 @@ run_get_stock_info
 
 run_get_stock_data
 
+run_get_cap_num
+
 run_gen_list
 
 run_conv_data

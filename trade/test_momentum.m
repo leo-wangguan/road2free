@@ -20,25 +20,18 @@ function [Profit, Aval] = test_momentum(BigData, List, Compo, Arg)
     Buyable  = pick_data(BigData, 'BUYABLE');
     Sellable = pick_data(BigData, 'SELLABLE');
 
-    % Calculate interpolation for continuous.
     InterpPrice = calc_interp_2d(Close);
 
-    % Calculate shift percentage.
     ShiftPct = calc_shift_pct_2d(InterpPrice, Arg.ShiftN);
 
-    % Mask component signal with date.
     CompoSignal = mask_compo_signal(Compo, List.Date);
 
-    % Start from the day components were full.
     StartIdx = find(List.Date >= Arg.Start, 1);
 
-    % Get pool signal from trading.
     PoolSignal = do_exchange(CompoSignal, ShiftPct, Buyable, Sellable, StartIdx, Arg);
 
-    % Calculate daily percentage.
     DailyPct = calc_shift_pct_2d(InterpPrice, 1);
 
-    % Calculate daily profit.
     [Profit, Aval] = calc_daily_profit_2d(DailyPct, PoolSignal, Arg.TotalN);
 
 end

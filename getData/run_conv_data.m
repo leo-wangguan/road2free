@@ -3,6 +3,7 @@ function run_conv_data()
     cd_to_top_level()
 
     load('./mat/List.mat')
+    load('./mat/CapNum.mat')
 
     disp_msg('IN', 'Converting data ...')
 
@@ -10,10 +11,10 @@ function run_conv_data()
 
         load(List.File{i})
 
-        Data = conv_data(List.Type{i}, Data);
+        Data = conv_data(List.Type{i}, Data, CapNum{i});
 
         save(List.Conv{i}, 'Data')
- 
+
     end
 
 end

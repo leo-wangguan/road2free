@@ -23,9 +23,9 @@ function run_gen_list()
 
     List.DateLen = length(List.Date);
 
-    List.ColLen = 12;   % [Date Open High Low Close Before Vol Amount Factor N Buyable Sellable]
+    List.ColLen = 16;
 
-    List.ResLen = 6;    % [BuySignal SellSignal HoldSignal BuyPrice SellPrice LongRatio]
+    List.ResLen = 6;
 
     save('./mat/List', 'List')
 

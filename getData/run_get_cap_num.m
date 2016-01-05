@@ -18,7 +18,7 @@ function run_get_cap_num()
 
     end
 
-    save('./mat/CapNum2', 'CapNum')
+    save('./mat/CapNum', 'CapNum')
 
 end
 

@@ -20,7 +20,7 @@ function run_fuse_data()
 
     disp_msg('IN', 'Saving data ...')
 
-    save('./mat/BigData', 'BigData')
+    save('./mat/BigData', 'BigData', '-v7.3')
 
     save('./mat/BigDataS', 'BigDataS')
 

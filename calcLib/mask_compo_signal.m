@@ -9,10 +9,10 @@ function CompoSignal = mask_compo_signal(Compo, Date)
     % Get unique and repetitive indices, sorted by abbreviations.
     [~, UniIdx, RepIdx] = unique(Compo(:,1));
 
-    % Get indices for the same stock.
+    % Get indices of the same stock.
     Idx = arrayfun(@(x) find(x == RepIdx), 1:length(UniIdx), 'uni', false);
 
-    % Combine date masks for the same stock.
+    % Combine date masks of the same stock.
     CompoSignal = cellfun(@(x) sum([DateMask{x}], 2), Idx, 'uni', false);
     CompoSignal = [CompoSignal{:}];
 
