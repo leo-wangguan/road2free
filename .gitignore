@@ -1,10 +1,13 @@
 mat/ExDiv/
 mat/ForAdj/
 mat/Index/
+mat/Report/
 mat/BigData.mat
 mat/BigDataS.mat
+mat/CapNum.mat
 mat/List.mat
 mat/StockInfo.mat
+
 
 log/
 *.asv

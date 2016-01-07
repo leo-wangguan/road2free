@@ -4,7 +4,7 @@ function run_get_cap_num()
 
     [Type, Code, FileLen] = load_list();
 
-    CapNum = zeros(FileLen, 3);
+    CapNum = cell(FileLen, 1);
 
     disp_msg('IN', 'Retrieving capital number ...')
 
@@ -12,7 +12,7 @@ function run_get_cap_num()
 
         if strcmp(Type{i}, 'STOCK')
 
-            CapNum = get_cap_num(Code{i});
+            CapNum{i} = get_cap_num(Code{i});
 
         end
 

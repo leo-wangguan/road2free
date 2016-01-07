@@ -11,7 +11,7 @@ function run_conv_data()
 
         load(List.File{i})
 
-        Data = conv_data(List.Type{i}, Data, CapNum);
+        Data = conv_data(List.Type{i}, Data, CapNum{i});
 
         save(List.Conv{i}, 'Data')
 
