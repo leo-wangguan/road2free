@@ -37,6 +37,6 @@ function NewData = test_model_v2(BigData, List, Start, End, ...
 
     end
 
-    NewData = cat(2, BigData, NewData);
+    NewData = cat(2, BigData(:,1:10,:), NewData);
     NewData = NewData(Arg{end}:end,:,:);
 end

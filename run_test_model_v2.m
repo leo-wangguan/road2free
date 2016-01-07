@@ -2,13 +2,11 @@ tic
 
 clear
 
-% global List
-
 load('./mat/List.mat')
 load('./mat/BigData.mat')
 
-Start = 20150106;
-End   = 20151230;
+Start = 20140101;
+End   = 20150101;
 
 quant_signal = @quant_gushequ_signal;
 Arg = {120};
