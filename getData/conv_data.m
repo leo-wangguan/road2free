@@ -3,7 +3,7 @@ function Data = conv_data(Type, Data, CapNum)
     % Data = [Date Open High Low Close Vol Amount Factor];
     %
     % Data = [Date Open High Low Close Before Vol Amount Factor N
-    %         Buyable Sellable TotalCap FloatCap TotalMaket FloatMaket];
+    %         Buyable Sellable TotalNum FloatNum TotalMaket FloatMaket];
 
     % Save ex-dividend close price to calculate market cap later.
     ExDivClose = Data(:,5);
@@ -29,7 +29,7 @@ function Data = conv_data(Type, Data, CapNum)
     % Insert column 'Buyable' and 'Sellable', calculated with close price.
     [Data(:,11), Data(:,12)] = calc_tradability(Data(:,5));
 
-    % Insert column 'TotalCap', 'FloatCap', 'TotalMarket' and 'FloatMarket'.
+    % Insert column 'TotalNum', 'FloatNum', 'TotalMarket' and 'FloatMarket'.
     if strcmp(Type, 'STOCK')
 
         [Data(:,13), Data(:,14)] = mask_cap_num(Data(:,1), CapNum);

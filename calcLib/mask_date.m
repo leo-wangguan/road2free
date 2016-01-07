@@ -11,7 +11,7 @@ function Duration = mask_date(Date, Start, End, Offset)
 
     end
 
-    if Start >= End || sum(Date >= Start) == 0 || sum(Date <= End) == 0
+    if Start > End || sum(Date >= Start) == 0 || sum(Date <= End) == 0
 
         Duration = false(size(Date));
 

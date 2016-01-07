@@ -3,7 +3,7 @@ function CapNum = get_cap_num(Code)
     Total = do_get(Code, 'TotalStock');
     Float = do_get(Code, 'LiuTongA') - do_get(Code, 'GaoGuan');
 
-    CapNum = num2cell([Total, Float(:,2)]);
+    CapNum = [Total, Float(:,2)];
 
 end
 

@@ -21,7 +21,7 @@ function Res = calc_summary(Data, NewData)
     Res.BuyCount   = sum(BuySignal);
     Res.SellCount  = sum(SellSignal);
 
-    Res.YoyPct = calc_yoy_pct(Date, HoldSignal, BuyPrice, SellPrice, LongRatio);
+%     Res.YoyPct = calc_yoy_pct(Date, HoldSignal, BuyPrice, SellPrice, LongRatio);
 
     [Res.WinRate, Res.AvgWinPct, Res.AvgLossPct] = ...
         calc_win_rate(BuySignal, SellSignal, HoldSignal, BuyPrice, SellPrice);

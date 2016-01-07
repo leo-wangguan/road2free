@@ -1,12 +1,11 @@
-function [TotalCap, FloatCap] = mask_cap_num(Date, CapNum)
+function [TotalNum, FloatNum] = mask_cap_num(Date, CapNum)
 
-    End = [CapNum(2:end,1); Date(end) + 1];
-    DateMask = cellfun(@(x, y) mask_date(Date, x, y - 1), CapNum(:,1), End, 'uni', false);
+    DateMask = mask_date_2d(Date, CapNum(:,1), [CapNum(2:end,1) - 1; Date(end)]);
 
-    TotalCap = cellfun(@(x, y) x .* y, DateMask, CapNum(:,2), 'uni', false);
-    FloatCap = cellfun(@(x, y) x .* y, DateMask, CapNum(:,3), 'uni', false);
+    TotalNum = bsxfun(@times, DateMask, CapNum(:,2)');
+    TotalNum = sum(TotalNum, 2);
 
-    TotalCap = sum([TotalCap{:}], 2);
-    FloatCap = sum([FloatCap{:}], 2);
+    FloatNum = bsxfun(@times, DateMask, CapNum(:,3)');
+    FloatNum = sum(FloatNum, 2);
 
 end

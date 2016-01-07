@@ -1,7 +1,7 @@
-function MA = calc_ma(A, Avg)
+function MA = calc_ma(A, N)
 
-    H  = hankel(1:Avg, Avg:Avg+length(A)-1)';
-    A  = [zeros(Avg - 1, 1); A];
-    MA = mean(A(H), 2);
+    H  = hankel(1:N, N:N+length(A)-1);
+    A  = [zeros(N - 1, 1); A];
+    MA = mean(A(H))';
 
 end

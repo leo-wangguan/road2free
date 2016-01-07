@@ -4,7 +4,7 @@ function CompoSignal = mask_compo_signal(Compo, Date)
     Compo(cellfun(@isempty, Compo(:,3)), 3) = {Date(end)};
 
     % Mask each entry with date.
-    DateMask = cellfun(@(x, y) mask_date(Date, x, y - 1), Compo(:,2), Compo(:,3), 'uni', false);
+    DateMask = mask_date_2d(Date, [Compo{:,2}]', [Compo{:,3}]' - 1);
 
     % Get unique and repetitive indices, sorted by abbreviations.
     [~, UniIdx, RepIdx] = unique(Compo(:,1));
@@ -13,7 +13,7 @@ function CompoSignal = mask_compo_signal(Compo, Date)
     Idx = arrayfun(@(x) find(x == RepIdx), 1:length(UniIdx), 'uni', false);
 
     % Combine date masks of the same stock.
-    CompoSignal = cellfun(@(x) sum([DateMask{x}], 2), Idx, 'uni', false);
+    CompoSignal = cellfun(@(x) sum(DateMask(:,x), 2), Idx, 'uni', false);
     CompoSignal = [CompoSignal{:}];
 
 end
