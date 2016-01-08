@@ -26,6 +26,13 @@ for i = 1:NumDay
     end
     Balance{i,2} = Close;
     
+    % Sell
+    if (NumSell ~= 0) && (i ~=1)
+        Earn = sum(Balance{i-1,3} .* SellPrice)*(1-0.0003-0.001);
+        Balance{i,1} = Balance{i,1} + Earn;
+        Balance{i,3} = Balance{i,3} - Balance{i-1,3} .* logical(SellPrice);
+    end
+    
     % Buy
     if (NumBuy~=0) % && (isempty(Balance{i,3}(Balance{i,3}>0)))
         Each = ones(Len,1) * (Balance{i,1}/NumBuy);
@@ -33,12 +40,6 @@ for i = 1:NumDay
         Cost = sum(BuyPrice*(1+0.0003) .* ShareList);
         Balance{i,1} = Balance{i,1} - Cost;
         Balance{i,3} = Balance{i,3}+ ShareList;
-    end
-    % Sell
-    if (NumSell ~= 0) && (i ~=1)
-        Earn = sum(Balance{i-1,3} .* SellPrice)*(1-0.0003-0.001);
-        Balance{i,1} = Balance{i,1} + Earn;
-        Balance{i,3} = Balance{i,3} - Balance{i-1,3} .* logical(SellPrice);
     end
     
     Balance{i,4} = Balance{i,1} + sum(Balance{i,2} .* Balance{i,3});
