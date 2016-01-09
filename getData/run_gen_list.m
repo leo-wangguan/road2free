@@ -19,11 +19,13 @@ function run_gen_list()
 
     List.Date = Data(:,1);
 
+    List.Base = calc_base_line;
+
     List.FileLen = length(List.File);
 
     List.DateLen = length(List.Date);
 
-    List.ColLen = 16;
+    List.ColLen = 17;
 
     List.ResLen = 6;
 

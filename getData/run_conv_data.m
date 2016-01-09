@@ -2,19 +2,21 @@ function run_conv_data()
 
     cd_to_top_level()
 
-    load('./mat/List.mat')
-    load('./mat/CapNum.mat')
+    [List, CapNum] = load_data();
 
     disp_msg('IN', 'Converting data ...')
 
-    for i = 1:List.FileLen
+    parfor i = 1:List.FileLen
 
-        load(List.File{i})
-
-        Data = conv_data(List.Type{i}, Data, CapNum{i});
-
-        save(List.Conv{i}, 'Data')
+        conv_data(List.Type{i}, List.File{i}, List.Conv{i}, List, CapNum{i});
 
     end
+
+end
+
+function [List, CapNum] = load_data()
+
+    load('./mat/List.mat')
+    load('./mat/CapNum.mat')
 
 end

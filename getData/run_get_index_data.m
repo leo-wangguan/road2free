@@ -2,7 +2,7 @@ function run_get_index_data()
 
     cd_to_top_level()
 
-    CodeList = ['000001'; '399005'; '399006'; '399933'];
+    CodeList = ['000001'; '399005'; '399006'; '399933'; '399300'];
 
     for i = 1:size(CodeList, 1)
 

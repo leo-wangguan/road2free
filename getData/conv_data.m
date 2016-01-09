@@ -1,15 +1,17 @@
-function Data = conv_data(Type, Data, CapNum)
+function Data = conv_data(Type, File, Conv, List, CapNum)
 
     % Data = [Date Open High Low Close Vol Amount Factor];
     %
     % Data = [Date Open High Low Close Before Vol Amount Factor N
-    %         Buyable Sellable TotalNum FloatNum TotalMaket FloatMaket];
+    %         Buyable Sellable TotalNum FloatNum TotalMaket FloatMaket BaseLine];
+
+    load(File)
 
     % Save ex-dividend close price to calculate market cap later.
     ExDivClose = Data(:,5);
 
-    % Expand the number of columns to 16.
-    Data(:,16) = 0;
+    % Expand the number of columns to 17.
+    Data(:,17) = 0;
 
     % Calculate forward adjusted price.
     if strcmp(Type, 'STOCK')
@@ -37,5 +39,11 @@ function Data = conv_data(Type, Data, CapNum)
         Data(:,16) = Data(:,14) .* ExDivClose / 1e8;
 
     end
+
+    % Insert column 'BaseLine'.
+
+    Data(:,17) = List.Base(ismember(List.Date, Data(:,1)));
+
+    save(Conv, 'Data')
 
 end
