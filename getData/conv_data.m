@@ -41,7 +41,6 @@ function Data = conv_data(Type, File, Conv, List, CapNum)
     end
 
     % Insert column 'BaseLine'.
-
     Data(:,17) = List.Base(ismember(List.Date, Data(:,1)));
 
     save(Conv, 'Data')
