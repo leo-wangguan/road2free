@@ -39,11 +39,7 @@ function get_stock_info(StockInfo)
         % Get info only when no existing info.
         if isempty(StockInfo{i,4})
 
-            Code = num2str06d(StockInfo{i,3});
-
-            disp_msg('IN', ['Updating stock info ', Code, ' ...'])
-
-            StockInfo{i,4} = GetStockInfo_Web(Code);
+            StockInfo{i,4} = GetStockInfo_Web(num2str06d(StockInfo{i,3}));
 
             % URL read may get error, save data right away.
             save('./mat/StockInfo', 'StockInfo')
